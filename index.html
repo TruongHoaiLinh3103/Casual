@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casual</title>
+    <link href="./css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <h2 id="fake-data-generator-build-status">Fake data generator</h2>
+    <h2 id="installation">Installation</h2>
+    <pre class="box-x"><code>npm install casual</code></pre>
+    <h2 id="usage">Usage</h2>
+    <pre class="box-x"><code class="language-javascript">var casual = require(&#39;casual&#39;);
+
+    // Generate random sentence
+    // You don&#39;t need function call operator here
+    // because most of generators use properties mechanism
+    var sentence = casual.sentence;
+
+    // Generate random city name
+    var city = casual.city;
+
+    // Define custom generator
+    casual.define(&#39;point&#39;, function() {
+        return {
+            x: Math.random(),
+            y: Math.random()
+        };
+    });
+
+    // Generate random point
+    var point = casual.point;
+
+    // And so on..
+    </code></pre>
+    <p>Casual uses javascript properties for common generators so you don&#39;t need to use function call operator</p>
+    <h2 id="embedded-generators">Embedded generators</h2>
+    <pre class="box-x"><code class="language-javascript">
+    // Address
+
+    casual.country              // &#39;United Kingdom&#39;
+    casual.city                 // &#39;New Ortiz chester&#39;
+    casual.zip(digits = {5, 9}) // &#39;26995-7979&#39; (if no digits specified then random selection between ZIP and ZIP+4)
+    casual.street               // &#39;Jadyn Islands&#39;
+    casual.address              // &#39;6390 Tremblay Pines Suite 784&#39;
+    casual.address1             // &#39;8417 Veda Circles&#39;
+    casual.address2             // &#39;Suite 648&#39;
+    casual.state                // &#39;Michigan&#39;
+    casual.state_abbr           // &#39;CO&#39;
+    casual.latitude             // 90.0610
+    casual.longitude            // 180.0778
+    casual.building_number      // 2413
+
+    // Text
+
+    casual.sentence               // &#39;Laborum eius porro consequatur.&#39;
+    casual.sentences(n = 3)       // &#39;Dolorum fuga nobis sit natus consequatur. Laboriosam sapiente. Natus quos ut.&#39;
+    casual.title                  // &#39;Systematic nobis&#39;
+    casual.text                   // &#39;Nemo tempore natus non accusamus eos placeat nesciunt. et fugit ut odio nisi dolore non ... (long text)&#39;
+    casual.description            // &#39;Vel et rerum nostrum quia. Dolorum fuga nobis sit natus consequatur.&#39;
+    casual.short_description      // &#39;Qui iste similique iusto.&#39;
+    casual.string                 // &#39;saepe quia molestias voluptates et&#39;
+    casual.word                   // &#39;voluptatem&#39;
+    casual.words(n = 7)           // &#39;sed quis ut beatae id adipisci aut&#39;
+    casual.array_of_words(n = 7)  // [ &#39;voluptas&#39;, &#39;atque&#39;, &#39;vitae&#39;, &#39;vel&#39;, &#39;dolor&#39;, &#39;saepe&#39;, &#39;ut&#39; ]
+    casual.letter                 // &#39;k&#39;
+
+    // Internet
+
+    casual.ip           // &#39;21.44.122.149&#39;
+    casual.domain       // &#39;darrion.us&#39;
+    casual.url          // &#39;germaine.net&#39;
+    casual.email        // &#39;Josue.Hessel@claire.us&#39;
+    casual.user_agent   // &#39;Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0&#39;
+
+    // Person
+
+    casual.name            // &#39;Alberto&#39;
+    casual.username        // &#39;Darryl&#39;
+    casual.first_name      // &#39;Derek&#39;
+    casual.last_name       // &#39;Considine&#39;
+    casual.full_name       // &#39;Kadin Torphy&#39;
+    casual.password        // &#39;(205)580-1350Schumm&#39;
+    casual.name_prefix     // &#39;Miss&#39;
+    casual.name_suffix     // &#39;Jr.&#39;
+    casual.company_name    // &#39;Cole, Wuckert and Strosin&#39;
+    casual.company_suffix  // &#39;Inc&#39;
+    casual.catch_phrase    // &#39;Synchronised optimal concept&#39;
+    casual.phone           // &#39;982-790-2592&#39;
+
+    // Numbers
+
+    casual.random                            // 0.7171590146608651 (core generator)
+    casual.integer(from = -1000, to = 1000)  // 632
+    casual.double(from = -1000, to = 1000)   // -234.12987444
+    casual.array_of_digits(n = 7)            // [ 4, 8, 3, 1, 7, 6, 6 ]
+    casual.array_of_integers(n = 7)          // [ -105, -7, -532, -596, -430, -957, -234 ]
+    casual.array_of_doubles(n = 7)           // [ -866.3755785673857, -166.62194719538093, ...]
+    casual.coin_flip                         // true
+
+    // Date
+
+    casual.unix_time                    // 659897901
+    casual.moment                       // moment.js object see http://momentjs.com/docs/
+    casual.date(format = &#39;YYYY-MM-DD&#39;)  // &#39;2001-07-06&#39; (see available formatters http://momentjs.com/docs/#/parsing/string-format/)
+    casual.time(format = &#39;HH:mm:ss&#39;)    // &#39;03:08:02&#39; (see available formatters http://momentjs.com/docs/#/parsing/string-format/)
+    casual.century                      // &#39;IV&#39;
+    casual.am_pm                        // &#39;am&#39;
+    casual.day_of_year                  // 323
+    casual.day_of_month                 // 9
+    casual.day_of_week                  // 4
+    casual.month_number                 // 9
+    casual.month_name                   // &#39;March&#39;
+    casual.year                         // 1990
+    casual.timezone                     // &#39;America/Miquelon&#39;
+
+    // Payments
+
+    casual.card_type            // &#39;American Express&#39;
+    casual.card_number(vendor)  // &#39;4716506247152101&#39; (if no vendor specified then random)
+    casual.card_exp             // &#39;03/04&#39;
+    casual.card_data            // { type: &#39;MasterCard&#39;, number: &#39;5307558778577046&#39;, exp: &#39;04/88&#39;, holder_name: &#39;Jaron Gibson&#39; }
+
+    // Misc
+
+    casual.country_code    // &#39;ES&#39;
+    casual.language_code   // &#39;ru&#39;
+    casual.locale          // &#39;hi_IN&#39;
+    casual.currency        // { symbol: &#39;R&#39;, name: &#39;South African Rand&#39;, symbol_native: &#39;R&#39;, decimal_digits: 2, rounding: 0, code: &#39;ZAR&#39;, name_plural: &#39;South African rand&#39; }		
+    casual.currency_code   // &#39;TRY&#39;
+    casual.currency_symbol // &#39;TL&#39;
+    casual.currency_name   // Turkish Lira
+    casual.mime_type       // &#39;audio/mpeg&#39;
+    casual.file_extension  // &#39;rtf&#39;
+    casual.boolean         // true
+    casual.uuid            // &#39;2f4dc6ba-bd25-4e66-b369-43a13e0cf150&#39;
+
+    // Colors
+
+    casual.color_name       // &#39;DarkOliveGreen&#39;
+    casual.safe_color_name  // &#39;maroon&#39;
+    casual.rgb_hex          // &#39;#2e4e1f&#39;
+    casual.rgb_array        // [ 194, 193, 166 ]
+    </code></pre>
+    <h2 id="define-custom-generators">Define custom generators</h2>
+    <pre class="box-x"><code class="language-javascript">casual.define(&#39;user&#39;, function() {
+        return {
+            email: casual.email,
+            firstname: casual.first_name,
+            lastname: casual.last_name,
+            password: casual.password
+        };
+    });
+
+    // Generate object with randomly generated fields
+    var user = casual.user;
+    </code></pre>
+    <p>If you want to pass some params to your generator:</p>
+    <pre class="box-x"><code class="language-javascript">casual.define(&#39;profile&#39;, function(type) {
+        return {
+            title: casual.title,
+            description: casual.description,
+            type: type || &#39;private&#39;
+        };
+    });
+
+    // Generate object with random data
+    var profile = casual.profile(&#39;public&#39;);
+    </code></pre>
+    <p>NOTE: if getter function has non-empty arguments list then generator should be called as function <code>casual.profile(&#39;public&#39;)</code>,
+    otherwise it should be accessed as property <code>casual.profile</code>.
+    </p>
+    <h2 id="localization">Localization</h2>
+    <p>You can get localized version of casual generator:</p>
+    <pre class="box-x"><code class="language-javascript">var casual = require(&#39;casual&#39;).ru_RU;
+    casual.street; // &#39;Бухарестская&#39;
+    </code></pre>
+    <h2 id="helpers">Helpers</h2>
+    <h4 id="random_element">random_element</h4>
+    <p>Get random array element</p>
+    <pre class="box-x"><code class="language-javascript">var item = casual.random_element([&#39;ball&#39;, &#39;clock&#39;, &#39;table&#39;]);
+    </code></pre>
+    <h4 id="random_value">random_value</h4>
+    <p>Extract random object value</p>
+    <pre class="box-x"><code class="language-javascript">var val = casual.random_value({ a: 1, b: 3, c: 42 });
+    // val will be equal 1 or 3 or 42
+    </code></pre>
+    <h4 id="random_key">random_key</h4>
+    <p>Extract random object key</p>
+    <pre class="box-x"><code class="language-javascript">var val = casual.random_key({ a: 1, b: 3, c: 42 });
+    // val will be equal &#39;a&#39; or &#39;b&#39; or &#39;c&#39;
+    </code></pre>
+    <h4 id="populate">populate</h4>
+    <p>Replace placeholders with generators results</p>
+    <pre class="box-x"><code class="language-javascript">casual.populate(&#39;{{email}} {{first_name}}&#39;);
+    // &#39;Dallin.Konopelski@yahoo.com Lyla&#39;
+    </code></pre>
+    <h4 id="populate_one_of">populate_one_of</h4>
+    <p>Pick random element from given array and populate it</p>
+    <pre class="box-x"><code class="language-javascript">var formats = [&#39;{{first_name}}&#39;, &#39;{{last_name}} {{city}}&#39;];
+    casual.populate_one_of(formats);
+
+    // Same as
+
+    casual.populate(casual.random_element(formats));
+    </code></pre>
+    <h4 id="numerify">numerify</h4>
+    <p>Replace all <code>#</code> in string with digits</p>
+    <pre class="box-x"><code class="language-javascript">var format = &#39;(##)-00-###-##&#39;;
+    casual.numerify(format); // &#39;(10)-00-843-32&#39;
+    </code></pre>
+    <h4 id="define">define</h4>
+    <p><a href="#define-custom-generators">See custom generators</a></p>
+    <h4 id="register_provider">register_provider</h4>
+    <p>Register generators provider</p>
+    <pre class="box-x"><code class="language-javascript">var words = [&#39;flexible&#39;, &#39;great&#39;, &#39;ok&#39;, &#39;good&#39;];
+    var doge_provider = {
+        such: function() {
+            return &#39;such &#39; + casual.random_element(words);
+        },
+
+        doge_phrase: function() {
+            return &#39;wow &#39; + casual.such();
+        }
+    };
+
+    casual.register_provider(doge_provider);
+
+    casual.such;        // &#39;such good&#39;
+    casual.doge_phrase; // &#39;wow such flexible&#39;
+    </code></pre>
+    <h2 id="seeding">Seeding</h2>
+    <p>If you want to use a specific seed in order to get a repeatable random sequence:</p>
+    <pre class="box-x"><code class="language-javascript">casual.seed(123);
+    </code></pre>
+    <h2 id="generators-functions">Generators functions</h2>
+    <p>If you want to pass generator as a callback somewhere or just hate properties you always can access generator <strong>function</strong> at <code>casual._{generator}</code></p>
+    <pre class="box-x"><code class="language-javascript">// Generate value using function
+    var title = casual._title();
+    // Same as
+    var title = casual.title;
+
+    // Pass generator as callback
+    var array_of = function(times, generator) {
+        var result = [];
+
+        for (var i = 0; i &lt; times; ++i) {
+            result.push(generator());
+        }
+
+        return result;
+    };
+
+    // Will generate array of five random timestamps
+    var array_of_timestamps = array_of(5, casual._unix_time);
+    </code></pre>
+    <p>Or you can get functional version of casual generator:</p>
+    <pre class="box-x"><code class="language-javascript">var casual = require(&#39;casual&#39;).functions();
+
+    // Generate title
+    casual.title();
+
+    // Generate timestamp
+    casual.unix_time();
+    </code></pre>
+    <h2 id="view-providers-output-cli">View providers output cli</h2>
+    <p>There is a simple cli util which could be used to view/debug providers output:</p>
+    <pre class="box-x"><code># Will render table with columns [generator_name, result] for all providers
+    node utils/show.js
+
+    # Will render table with columns [generator_name, result] only for person provider
+    node utils/show.js person
+    </code></pre>
+</body>
+</html>
