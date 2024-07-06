@@ -13,26 +13,26 @@
     <h2 id="usage">Usage</h2>
     <pre class="box-x"><code class="language-javascript">var casual = require(&#39;casual&#39;);
 
-    // Generate random sentence
-    // You don&#39;t need function call operator here
-    // because most of generators use properties mechanism
-    var sentence = casual.sentence;
+// Generate random sentence
+// You don&#39;t need function call operator here
+// because most of generators use properties mechanism
+var sentence = casual.sentence;
 
-    // Generate random city name
-    var city = casual.city;
+// Generate random city name
+var city = casual.city;
 
-    // Define custom generator
-    casual.define(&#39;point&#39;, function() {
-        return {
-            x: Math.random(),
-            y: Math.random()
-        };
-    });
+// Define custom generator
+casual.define(&#39;point&#39;, function() {
+    return {
+        x: Math.random(),
+        y: Math.random()
+    };
+});
 
-    // Generate random point
-    var point = casual.point;
+// Generate random point
+var point = casual.point;
 
-    // And so on..
+// And so on..
     </code></pre>
     <p>Casual uses javascript properties for common generators so you don&#39;t need to use function call operator</p>
     <h2 id="embedded-generators">Embedded generators</h2>
@@ -145,28 +145,28 @@
     </code></pre>
     <h2 id="define-custom-generators">Define custom generators</h2>
     <pre class="box-x"><code class="language-javascript">casual.define(&#39;user&#39;, function() {
-        return {
-            email: casual.email,
-            firstname: casual.first_name,
-            lastname: casual.last_name,
-            password: casual.password
-        };
-    });
+    return {
+        email: casual.email,
+        firstname: casual.first_name,
+        lastname: casual.last_name,
+        password: casual.password
+    };
+});
 
-    // Generate object with randomly generated fields
-    var user = casual.user;
+// Generate object with randomly generated fields
+var user = casual.user;
     </code></pre>
     <p>If you want to pass some params to your generator:</p>
     <pre class="box-x"><code class="language-javascript">casual.define(&#39;profile&#39;, function(type) {
-        return {
-            title: casual.title,
-            description: casual.description,
-            type: type || &#39;private&#39;
-        };
-    });
+    return {
+        title: casual.title,
+        description: casual.description,
+        type: type || &#39;private&#39;
+    };
+});
 
-    // Generate object with random data
-    var profile = casual.profile(&#39;public&#39;);
+// Generate object with random data
+var profile = casual.profile(&#39;public&#39;);
     </code></pre>
     <p>NOTE: if getter function has non-empty arguments list then generator should be called as function <code>casual.profile(&#39;public&#39;)</code>,
     otherwise it should be accessed as property <code>casual.profile</code>.
@@ -174,7 +174,7 @@
     <h2 id="localization">Localization</h2>
     <p>You can get localized version of casual generator:</p>
     <pre class="box-x"><code class="language-javascript">var casual = require(&#39;casual&#39;).ru_RU;
-    casual.street; // &#39;Бухарестская&#39;
+casual.street; // &#39;Бухарестская&#39;
     </code></pre>
     <h2 id="helpers">Helpers</h2>
     <h4 id="random_element">random_element</h4>
@@ -184,51 +184,51 @@
     <h4 id="random_value">random_value</h4>
     <p>Extract random object value</p>
     <pre class="box-x"><code class="language-javascript">var val = casual.random_value({ a: 1, b: 3, c: 42 });
-    // val will be equal 1 or 3 or 42
+// val will be equal 1 or 3 or 42
     </code></pre>
     <h4 id="random_key">random_key</h4>
     <p>Extract random object key</p>
     <pre class="box-x"><code class="language-javascript">var val = casual.random_key({ a: 1, b: 3, c: 42 });
-    // val will be equal &#39;a&#39; or &#39;b&#39; or &#39;c&#39;
+// val will be equal &#39;a&#39; or &#39;b&#39; or &#39;c&#39;
     </code></pre>
     <h4 id="populate">populate</h4>
     <p>Replace placeholders with generators results</p>
     <pre class="box-x"><code class="language-javascript">casual.populate(&#39;{{email}} {{first_name}}&#39;);
-    // &#39;Dallin.Konopelski@yahoo.com Lyla&#39;
+// &#39;Dallin.Konopelski@yahoo.com Lyla&#39;
     </code></pre>
     <h4 id="populate_one_of">populate_one_of</h4>
     <p>Pick random element from given array and populate it</p>
     <pre class="box-x"><code class="language-javascript">var formats = [&#39;{{first_name}}&#39;, &#39;{{last_name}} {{city}}&#39;];
-    casual.populate_one_of(formats);
+casual.populate_one_of(formats);
 
-    // Same as
+// Same as
 
-    casual.populate(casual.random_element(formats));
+casual.populate(casual.random_element(formats));
     </code></pre>
     <h4 id="numerify">numerify</h4>
     <p>Replace all <code>#</code> in string with digits</p>
     <pre class="box-x"><code class="language-javascript">var format = &#39;(##)-00-###-##&#39;;
-    casual.numerify(format); // &#39;(10)-00-843-32&#39;
+casual.numerify(format); // &#39;(10)-00-843-32&#39;
     </code></pre>
     <h4 id="define">define</h4>
     <p><a href="#define-custom-generators">See custom generators</a></p>
     <h4 id="register_provider">register_provider</h4>
     <p>Register generators provider</p>
     <pre class="box-x"><code class="language-javascript">var words = [&#39;flexible&#39;, &#39;great&#39;, &#39;ok&#39;, &#39;good&#39;];
-    var doge_provider = {
-        such: function() {
-            return &#39;such &#39; + casual.random_element(words);
-        },
+var doge_provider = {
+    such: function() {
+        return &#39;such &#39; + casual.random_element(words);
+    },
 
-        doge_phrase: function() {
-            return &#39;wow &#39; + casual.such();
-        }
-    };
+    doge_phrase: function() {
+        return &#39;wow &#39; + casual.such();
+    }
+};
 
-    casual.register_provider(doge_provider);
+casual.register_provider(doge_provider);
 
-    casual.such;        // &#39;such good&#39;
-    casual.doge_phrase; // &#39;wow such flexible&#39;
+casual.such;        // &#39;such good&#39;
+casual.doge_phrase; // &#39;wow such flexible&#39;
     </code></pre>
     <h2 id="seeding">Seeding</h2>
     <p>If you want to use a specific seed in order to get a repeatable random sequence:</p>
@@ -237,40 +237,40 @@
     <h2 id="generators-functions">Generators functions</h2>
     <p>If you want to pass generator as a callback somewhere or just hate properties you always can access generator <strong>function</strong> at <code>casual._{generator}</code></p>
     <pre class="box-x"><code class="language-javascript">// Generate value using function
-    var title = casual._title();
-    // Same as
-    var title = casual.title;
+var title = casual._title();
+// Same as
+var title = casual.title;
 
-    // Pass generator as callback
-    var array_of = function(times, generator) {
-        var result = [];
+// Pass generator as callback
+var array_of = function(times, generator) {
+    var result = [];
 
-        for (var i = 0; i &lt; times; ++i) {
-            result.push(generator());
-        }
+    for (var i = 0; i &lt; times; ++i) {
+        result.push(generator());
+    }
 
-        return result;
-    };
+    return result;
+};
 
-    // Will generate array of five random timestamps
-    var array_of_timestamps = array_of(5, casual._unix_time);
+// Will generate array of five random timestamps
+var array_of_timestamps = array_of(5, casual._unix_time);
     </code></pre>
     <p>Or you can get functional version of casual generator:</p>
     <pre class="box-x"><code class="language-javascript">var casual = require(&#39;casual&#39;).functions();
 
-    // Generate title
-    casual.title();
+// Generate title
+casual.title();
 
-    // Generate timestamp
-    casual.unix_time();
+// Generate timestamp
+casual.unix_time();
     </code></pre>
     <h2 id="view-providers-output-cli">View providers output cli</h2>
     <p>There is a simple cli util which could be used to view/debug providers output:</p>
     <pre class="box-x"><code># Will render table with columns [generator_name, result] for all providers
-    node utils/show.js
+node utils/show.js
 
-    # Will render table with columns [generator_name, result] only for person provider
-    node utils/show.js person
+# Will render table with columns [generator_name, result] only for person provider
+node utils/show.js person
     </code></pre>
 </body>
 </html>
